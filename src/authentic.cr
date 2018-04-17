@@ -11,6 +11,13 @@ module Authentic
     setting default_password_reset_time_limit : Time::Span = 15.minutes
   end
 
+  # Remember the originally requested path if it is a GET
+  #
+  # Call this if the user requested an action that requires sign in.
+  # It will remember the path they requested if it is a get.
+  #
+  # Once the user signs in call `Authentic.redirect_to_originally_requested_path`
+  # to redirect them back.
   def self.remember_requested_path(action : Lucky::Action) : Void
     if action.request.method.upcase == "GET"
       action.session[:return_to] = action.request.resource
