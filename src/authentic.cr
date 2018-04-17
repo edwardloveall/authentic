@@ -1,7 +1,6 @@
 require "habitat"
 require "lucky"
 require "lucky_record"
-require "bcrypt"
 require "./authentic/*"
 
 module Authentic
