@@ -11,7 +11,7 @@ module Authentic
     setting default_password_reset_time_limit : Time::Span = 15.minutes
   end
 
-  def self.remember_requested_path(action : Lucky::Action)
+  def self.remember_requested_path(action : Lucky::Action) : Void
     if action.request.method.upcase == "GET"
       action.session[:return_to] = action.request.resource
     end
@@ -20,7 +20,7 @@ module Authentic
   def self.redirect_to_originally_requested_path(
     action : Lucky::Action,
     fallback : Lucky::Action.class | Lucky::RouteHelper
-  )
+  ) : Lucky::Response
     return_to = action.session[:return_to]
     action.session.delete(:return_to)
     action.redirect to: return_to || fallback
