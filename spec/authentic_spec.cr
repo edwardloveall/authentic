@@ -42,13 +42,25 @@ describe Authentic do
     response.context.response.headers["Location"].should eq "/redirect_here"
   end
 
-  it "redirects to fallback if return to is not set" do
+  it "redirects to fallback Lucky::Action.class if return to is not set" do
     context = ContextHelper.new.build
     action = Test::Action.new(context, empty_params)
 
     response = Authentic.redirect_to_originally_requested_path(
       action,
       fallback: Fallback::Action
+    )
+
+    response.context.response.headers["Location"].should eq Fallback::Action.path
+  end
+
+  it "redirects to fallback RouteHelper if return to is not set" do
+    context = ContextHelper.new.build
+    action = Test::Action.new(context, empty_params)
+
+    response = Authentic.redirect_to_originally_requested_path(
+      action,
+      fallback: Fallback::Action.route
     )
 
     response.context.response.headers["Location"].should eq Fallback::Action.path
