@@ -24,6 +24,12 @@ module Authentic
     end
   end
 
+  # After successful sign in, call this to redirect back to the originally request path
+  #
+  # First call `Authentic.remember_requested_path` if the user is not signed in.
+  # Then call this to redirect them. A `fallback` action is required. The
+  # `fallback` action will be used if user was not trying to access a protected
+  # page before sign in.
   def self.redirect_to_originally_requested_path(
     action : Lucky::Action,
     fallback : Lucky::Action.class | Lucky::RouteHelper
