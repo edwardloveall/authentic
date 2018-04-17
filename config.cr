@@ -16,3 +16,35 @@ end
 LuckyMigrator::Runner.configure do
   settings.database = database
 end
+
+Lucky::StaticFileHandler.configure do
+  settings.hide_from_logs = true
+end
+
+Lucky::Session::Store.configure do
+  settings.key = "anything"
+  settings.secret = "so secret"
+end
+
+Lucky::ErrorHandler.configure do
+  settings.show_debug_output = true
+end
+
+Lucky::LogHandler.configure do
+  settings.show_timestamps = false
+end
+
+Lucky::RouteHelper.configure do
+  settings.domain = "example.com"
+end
+
+Lucky::Server.configure do
+  settings.secret_key_base = Lucky::Session::Store.settings.secret
+end
+
+Lucky::Server.configure do
+  settings.host = "localhost"
+  settings.port = 3000
+end
+
+Habitat.raise_if_missing_settings!
